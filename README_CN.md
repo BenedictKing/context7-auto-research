@@ -4,9 +4,26 @@
 [![GitHub Stars](https://img.shields.io/github/stars/BenedictKing/context7-auto-research?style=social)](https://github.com/BenedictKing/context7-auto-research)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## 快速开始指南
+[English](./README.md) | 简体中文
 
-5 分钟配置 Context7 Auto Research Skill
+> 🚀 让 Claude Code 自动获取最新的库和框架文档，告别过时的训练数据！
+
+## 简介
+
+Context7 Auto Research 是一个智能的 Claude Code 技能，当你询问关于库、框架或 API 的问题时，它会自动从 Context7 获取最新的文档。无需手动调用，完全自动化！
+
+### 核心特性
+
+- ✨ **自动触发**：检测到库/框架相关问题时自动激活
+- 🎯 **智能匹配**：根据信任分数和版本自动选择最佳文档源
+- 🔄 **实时文档**：通过 Context7 获取最新文档（从 GitHub 等上游同步）
+- 🌐 **广泛支持**：支持 React、Next.js、Prisma、Tailwind 等数千个开源库
+- 🏗️ **高效架构**：采用双技能架构，减少 Token 消耗
+- 🌍 **双语支持**：支持中英文触发词
+
+## 快速开始
+
+5 分钟完成配置
 
 ## 安装方式
 
@@ -93,6 +110,65 @@ Claude 会自动：
 - 主技能理解你的意图和上下文
 - 子技能独立执行 API 调用（使用 `context: fork`）
 - 减少 Token 消耗，提高响应速度
+
+## 工作原理
+
+### 自动触发机制
+
+技能会在检测到以下关键词时自动激活：
+
+**实现相关**
+- 中文：如何实现、怎么写、怎么做
+- 英文：How do I、How to、Show me how to
+
+**配置相关**
+- 中文：配置、设置、安装、初始化
+- 英文：configure、setup、install、initialize
+
+**文档相关**
+- 中文：文档、参考、API、查看
+- 英文：documentation、docs、reference、look up
+
+**库/框架提及**
+- 前端框架：React、Vue、Angular、Svelte、Solid
+- 全栈框架：Next.js、Nuxt、Remix、Astro
+- 后端框架：Express、Fastify、Koa、Hono
+- ORM：Prisma、Drizzle、TypeORM
+- 服务：Supabase、Firebase、Clerk
+- UI 库：Tailwind、shadcn/ui、Radix
+- 以及任何 npm 包或 GitHub 仓库
+
+### 双技能架构
+
+本项目采用**两阶段架构**，参考了 `codex-review` 的设计模式：
+
+```
+用户提问 → 主技能 (context7-auto-research)
+              ↓ 检测触发词 + 分析意图
+         Task 工具 → 子技能 (context7-fetcher)
+              ↓ 搜索库（独立上下文）
+         主技能 ← 返回搜索结果
+              ↓ 选择最佳匹配
+         Task 工具 → 子技能 (context7-fetcher)
+              ↓ 获取文档（独立上下文）
+         主技能 ← 返回文档内容
+              ↓ 整合并生成回答
+         用户 ← 准确的答案 + 代码示例
+```
+
+**为什么这样设计？**
+
+| 方面 | 主技能 | 子技能 |
+|------|--------|--------|
+| 上下文 | 完整对话历史 | Fork（独立） |
+| 用途 | 意图分析 | API 执行 |
+| Token 消耗 | 较高 | 较低 |
+| 执行方式 | 顺序 | 可并行 |
+
+**优势：**
+- 主技能需要理解用户意图（需要上下文）
+- API 调用不需要对话历史（避免浪费 Token）
+- 分离后提高效率，降低成本
 
 ## 常见问题
 

@@ -4,11 +4,26 @@
 [![GitHub Stars](https://img.shields.io/github/stars/BenedictKing/context7-auto-research?style=social)](https://github.com/BenedictKing/context7-auto-research)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-[中文文档](./README_CN.md)
+English | [简体中文](./README_CN.md)
 
-## Quick Start Guide
+> 🚀 Automatically fetch the latest library and framework documentation for Claude Code, say goodbye to outdated training data!
 
-Set up Context7 Auto Research Skill in 5 minutes
+## Introduction
+
+Context7 Auto Research is an intelligent Claude Code skill that automatically fetches the latest documentation from Context7 when you ask questions about libraries, frameworks, or APIs. No manual invocation needed - it's fully automated!
+
+### Key Features
+
+- ✨ **Auto-Trigger**: Automatically activates when library/framework questions are detected
+- 🎯 **Smart Matching**: Automatically selects the best documentation source based on trust score and version
+- 🔄 **Real-Time Docs**: Fetches the latest documentation via Context7 (synced from GitHub and other sources)
+- 🌐 **Wide Support**: Supports thousands of open-source libraries including React, Next.js, Prisma, Tailwind, and more
+- 🏗️ **Efficient Architecture**: Uses dual-skill architecture to reduce token consumption
+- 🌍 **Bilingual Support**: Supports both English and Chinese trigger keywords
+
+## Quick Start
+
+Set up in 5 minutes
 
 ## Installation
 
@@ -95,6 +110,65 @@ Claude will automatically:
 - Main skill understands your intent and context
 - Sub-skill executes API calls independently (using `context: fork`)
 - Reduces token consumption and improves response speed
+
+## How It Works
+
+### Auto-Trigger Mechanism
+
+The skill automatically activates when detecting these keywords:
+
+**Implementation Queries**
+- Chinese: 如何实现、怎么写、怎么做
+- English: How do I, How to, Show me how to
+
+**Configuration & Setup**
+- Chinese: 配置、设置、安装、初始化
+- English: configure, setup, install, initialize
+
+**Documentation Requests**
+- Chinese: 文档、参考、API、查看
+- English: documentation, docs, reference, look up
+
+**Library/Framework Mentions**
+- Frontend: React, Vue, Angular, Svelte, Solid
+- Full-stack: Next.js, Nuxt, Remix, Astro
+- Backend: Express, Fastify, Koa, Hono
+- ORM: Prisma, Drizzle, TypeORM
+- Services: Supabase, Firebase, Clerk
+- UI: Tailwind, shadcn/ui, Radix
+- Plus any npm package or GitHub repository
+
+### Dual-Skill Architecture
+
+This project uses a **two-stage architecture**, inspired by the `codex-review` design pattern:
+
+```
+User Query → Main Skill (context7-auto-research)
+              ↓ Detect triggers + Analyze intent
+         Task Tool → Sub-Skill (context7-fetcher)
+              ↓ Search library (independent context)
+         Main Skill ← Return search results
+              ↓ Select best match
+         Task Tool → Sub-Skill (context7-fetcher)
+              ↓ Fetch docs (independent context)
+         Main Skill ← Return documentation
+              ↓ Integrate and generate response
+         User ← Accurate answer + Code examples
+```
+
+**Why this design?**
+
+| Aspect | Main Skill | Sub-Skill |
+|--------|-----------|-----------|
+| Context | Full conversation | Fork (independent) |
+| Purpose | Intent analysis | API execution |
+| Token usage | Higher | Lower |
+| Execution | Sequential | Can be parallel |
+
+**Benefits:**
+- Main skill needs to understand user intent (requires context)
+- API calls don't need conversation history (avoids wasting tokens)
+- Separation improves efficiency and reduces costs
 
 ## FAQ
 
