@@ -1,4 +1,10 @@
-# 快速开始指南
+# Context7 Auto Research Skill
+
+[![Claude Code Skill](https://img.shields.io/badge/Claude%20Code-Skill-blue)](https://skillsmp.com/)
+[![GitHub Stars](https://img.shields.io/github/stars/BenedictKing/context7-auto-research?style=social)](https://github.com/BenedictKing/context7-auto-research)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+## 快速开始指南
 
 5 分钟配置 Context7 Auto Research Skill
 

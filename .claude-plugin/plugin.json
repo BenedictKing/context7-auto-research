@@ -1,0 +1,26 @@
+{
+  "name": "context7-auto-research",
+  "description": "Auto-research skill for Context7 - Automatically fetches up-to-date documentation when users ask about libraries and frameworks",
+  "author": {
+    "name": "BenedictKing",
+    "url": "https://github.com/BenedictKing"
+  },
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BenedictKing/context7-auto-research.git"
+  },
+  "skills": [
+    ".claude/skills/context7-auto-research",
+    ".claude/skills/context7-fetcher.md"
+  ],
+  "keywords": [
+    "context7",
+    "documentation",
+    "auto-research",
+    "api",
+    "libraries",
+    "frameworks"
+  ],
+  "license": "MIT"
+}

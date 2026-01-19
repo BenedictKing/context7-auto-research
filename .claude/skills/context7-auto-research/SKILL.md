@@ -1,6 +1,13 @@
 ---
 name: context7-auto-research
+version: 1.0.0
+author: BenedictKing
 description: Automatically fetches up-to-date documentation from Context7 when users ask about libraries, frameworks, APIs, or need code examples. Triggers proactively without explicit user request.
+allowed-tools:
+  - Task
+  - Bash
+  - Read
+  - Write
 ---
 
 # Context7 Auto Research Skill
