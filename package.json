@@ -1,0 +1,27 @@
+{
+  "name": "context7-auto-research",
+  "version": "1.0.0",
+  "description": "Auto-research skill for Context7 - Automatically fetches up-to-date documentation when users ask about libraries and frameworks",
+  "main": ".claude/skills/auto-research/context7-api.js",
+  "scripts": {
+    "test": "node .claude/skills/auto-research/context7-api.js search react useEffect"
+  },
+  "keywords": [
+    "context7",
+    "claude",
+    "skill",
+    "documentation",
+    "auto-research",
+    "ai",
+    "llm"
+  ],
+  "author": "petaflops",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/petaflops/context7-auto-research.git"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
