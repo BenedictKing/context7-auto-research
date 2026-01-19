@@ -8,9 +8,33 @@
 
 5 分钟配置 Context7 Auto Research Skill
 
-## 1. 克隆仓库
+## 安装方式
+
+### 方式一：使用 add-skill 安装（推荐）
+
+最简单的安装方式是使用 `add-skill` 工具：
 
 ```bash
+# 安装到 Claude Code
+npx add-skill BenedictKing/context7-auto-research
+
+# 或全局安装到所有检测到的代理
+npx add-skill BenedictKing/context7-auto-research -g
+```
+
+Skill 会自动安装到 `~/.claude/skills/context7-auto-research` 并被 Claude Code 加载。
+
+### 方式二：通过 Git Clone 手动安装
+
+如果你偏好手动安装或想自定义设置：
+
+#### 1. 克隆仓库
+
+```bash
+# 克隆到 Claude Code 的 skills 目录
+git clone https://github.com/BenedictKing/context7-auto-research.git ~/.claude/skills/context7-auto-research
+
+# 或克隆到你偏好的位置
 git clone https://github.com/BenedictKing/context7-auto-research.git
 cd context7-auto-research
 ```

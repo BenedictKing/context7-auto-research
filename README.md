@@ -10,20 +10,44 @@
 
 Set up Context7 Auto Research Skill in 5 minutes
 
-## 1. Clone the Repository
+## Installation
+
+### Option 1: Install via add-skill (Recommended)
+
+The easiest way to install this skill is using the `add-skill` tool:
 
 ```bash
+# Install to Claude Code
+npx add-skill BenedictKing/context7-auto-research
+
+# Or install globally to all detected agents
+npx add-skill BenedictKing/context7-auto-research -g
+```
+
+The skill will be automatically installed to `~/.claude/skills/context7-auto-research` and loaded by Claude Code.
+
+### Option 2: Manual Installation via Git Clone
+
+If you prefer manual installation or want to customize the setup:
+
+#### 1. Clone the Repository
+
+```bash
+# Clone to Claude Code's skills directory
+git clone https://github.com/BenedictKing/context7-auto-research.git ~/.claude/skills/context7-auto-research
+
+# Or clone to your preferred location
 git clone https://github.com/BenedictKing/context7-auto-research.git
 cd context7-auto-research
 ```
 
-## 2. Get API Key (Optional but Recommended)
+#### 2. Get API Key (Optional but Recommended)
 
 Visit [context7.com/dashboard](https://context7.com/dashboard) to register and get a free API key.
 
 > 💡 You can use this skill without an API key, but with lower rate limits.
 
-## 3. Configure API Key
+#### 3. Configure API Key
 
 Create a `.env` file in the skill directory:
 
@@ -38,7 +62,7 @@ Edit the `.env` file and add your API key:
 CONTEXT7_API_KEY=your_actual_api_key_here
 ```
 
-## 4. Test the Script
+#### 4. Test the Script
 
 Verify your configuration:
 
@@ -52,7 +76,7 @@ node .claude/skills/context7-auto-research/context7-api.js context "/vercel/next
 
 If you see JSON responses, your setup is successful!
 
-## 5. Start Using
+## Usage
 
 The skill activates automatically - no manual invocation needed. Just ask Claude:
 
