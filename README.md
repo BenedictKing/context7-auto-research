@@ -4,181 +4,183 @@
 [![GitHub Stars](https://img.shields.io/github/stars/BenedictKing/context7-auto-research?style=social)](https://github.com/BenedictKing/context7-auto-research)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## 快速开始指南
+[中文文档](./README_CN.md)
 
-5 分钟配置 Context7 Auto Research Skill
+## Quick Start Guide
 
-## 1. 克隆仓库
+Set up Context7 Auto Research Skill in 5 minutes
+
+## 1. Clone the Repository
 
 ```bash
 git clone https://github.com/BenedictKing/context7-auto-research.git
 cd context7-auto-research
 ```
 
-## 2. 获取 API Key（可选但推荐）
+## 2. Get API Key (Optional but Recommended)
 
-访问 [context7.com/dashboard](https://context7.com/dashboard) 注册并获取免费 API key。
+Visit [context7.com/dashboard](https://context7.com/dashboard) to register and get a free API key.
 
-> 💡 不配置 API key 也可以使用，但会有较低的速率限制。
+> 💡 You can use this skill without an API key, but with lower rate limits.
 
-## 3. 配置 API Key
+## 3. Configure API Key
 
-在 skill 目录下创建 `.env` 文件：
+Create a `.env` file in the skill directory:
 
 ```bash
 cd .claude/skills/context7-auto-research
 cp .env.example .env
 ```
 
-编辑 `.env` 文件，填入你的 API key：
+Edit the `.env` file and add your API key:
 
 ```bash
 CONTEXT7_API_KEY=your_actual_api_key_here
 ```
 
-## 4. 测试脚本
+## 4. Test the Script
 
-验证配置是否正确：
+Verify your configuration:
 
 ```bash
-# 搜索 React 库
+# Search for React library
 node .claude/skills/context7-auto-research/context7-api.js search "react" "useEffect hook"
 
-# 获取 Next.js 文档
+# Get Next.js documentation
 node .claude/skills/context7-auto-research/context7-api.js context "/vercel/next.js" "middleware"
 ```
 
-如果看到 JSON 响应，说明配置成功！
+If you see JSON responses, your setup is successful!
 
-## 5. 开始使用
+## 5. Start Using
 
-Skill 会自动激活，无需手动调用。直接向 Claude 提问：
+The skill activates automatically - no manual invocation needed. Just ask Claude:
 
 ```
-你：如何在 Next.js 15 中配置中间件？
+You: How do I configure middleware in Next.js 15?
 ```
 
-Claude 会自动：
-1. 检测到 "Next.js 15" 和 "配置中间件"
-2. 使用 Task 工具调用 context7-fetcher 子技能搜索 Next.js
-3. 选择最佳匹配的版本（v15.x）
-4. 使用 Task 工具调用 context7-fetcher 获取中间件文档
-5. 整合文档内容，提供准确的答案和代码示例
+Claude will automatically:
+1. Detect "Next.js 15" and "configure middleware"
+2. Use Task tool to call context7-fetcher sub-skill to search for Next.js
+3. Select the best matching version (v15.x)
+4. Use Task tool to call context7-fetcher to fetch middleware documentation
+5. Integrate documentation and provide accurate answers with code examples
 
-**架构优势：**
-- 主技能理解你的意图和上下文
-- 子技能独立执行 API 调用（使用 `context: fork`）
-- 减少 Token 消耗，提高响应速度
+**Architecture Benefits:**
+- Main skill understands your intent and context
+- Sub-skill executes API calls independently (using `context: fork`)
+- Reduces token consumption and improves response speed
 
-## 常见问题
+## FAQ
 
-### Q: 我没有 API key 可以用吗？
-A: 可以！不配置 API key 也能使用，只是有较低的速率限制。
+### Q: Can I use this without an API key?
+A: Yes! The skill works without an API key, just with lower rate limits.
 
-### Q: .env 文件放在哪里？
-A: 放在 `.claude/skills/context7-auto-research/.env`
+### Q: Where should I put the .env file?
+A: Place it at `.claude/skills/context7-auto-research/.env`
 
-### Q: 如何知道 skill 是否在工作？
-A: 当你询问库/框架相关问题时，Claude 会自动调用脚本获取文档。你可以在响应中看到最新的、准确的信息。
+### Q: How do I know if the skill is working?
+A: When you ask questions about libraries/frameworks, Claude will automatically call the script to fetch documentation. You'll see up-to-date, accurate information in the responses.
 
-### Q: 支持哪些库？
-A: 支持所有在 GitHub 上有文档的开源库，包括：
+### Q: Which libraries are supported?
+A: All open-source libraries with documentation on GitHub, including:
 - React, Vue, Angular, Svelte
 - Next.js, Nuxt, Remix
 - Prisma, Drizzle, TypeORM
 - Express, Fastify, Koa
 - Supabase, Firebase
 - Tailwind, shadcn/ui
-- 以及更多...
+- And many more...
 
-### Q: 如何指定特定版本？
-A: 在问题中提到版本号，例如：
+### Q: How do I specify a particular version?
+A: Mention the version number in your question, for example:
 ```
-如何在 React 19 中使用 use hook？
+How do I use the use hook in React 19?
 Show me Next.js 15 middleware examples
 ```
 
-## 示例对话
+## Example Conversations
 
-### 示例 1：React Hooks
+### Example 1: React Hooks
 ```
-你：React 19 的 useEffect 有什么变化？
+You: What's new in React 19's useEffect?
 
-Claude：[自动调用 Context7 API]
-根据 React 19 的最新文档...
-[提供准确的 React 19 信息]
-```
-
-### 示例 2：Next.js 配置
-```
-你：怎么在 Next.js 15 中设置环境变量？
-
-Claude：[自动调用 Context7 API]
-在 Next.js 15 中，环境变量的配置方式是...
-[提供最新的配置方法和代码示例]
+Claude: [Automatically calls Context7 API]
+According to the latest React 19 documentation...
+[Provides accurate React 19 information]
 ```
 
-### 示例 3：Prisma Schema
+### Example 2: Next.js Configuration
 ```
-你：Show me how to define a many-to-many relation in Prisma
+You: How do I set up environment variables in Next.js 15?
 
-Claude：[自动调用 Context7 API]
+Claude: [Automatically calls Context7 API]
+In Next.js 15, environment variables are configured by...
+[Provides latest configuration methods and code examples]
+```
+
+### Example 3: Prisma Schema
+```
+You: Show me how to define a many-to-many relation in Prisma
+
+Claude: [Automatically calls Context7 API]
 Here's how to define many-to-many relations in Prisma...
-[提供 Prisma schema 示例]
+[Provides Prisma schema examples]
 ```
 
-## 下一步
+## Next Steps
 
-- 查看 [.claude/skills/context7-auto-research/SKILL.md](./.claude/skills/context7-auto-research/SKILL.md) 了解技术细节
-- 查看 [.claude/skills/context7-fetcher.md](./.claude/skills/context7-fetcher.md) 了解子技能架构
-- 开始提问，让 Claude 自动获取最新文档！
+- Check [.claude/skills/context7-auto-research/SKILL.md](./.claude/skills/context7-auto-research/SKILL.md) for technical details
+- Check [.claude/skills/context7-fetcher.md](./.claude/skills/context7-fetcher.md) for sub-skill architecture
+- Start asking questions and let Claude automatically fetch the latest documentation!
 
-## 架构说明
+## Architecture Overview
 
-本项目采用**两阶段架构**，参考了 `codex-review` 的设计模式：
+This project uses a **two-stage architecture**, inspired by the `codex-review` design pattern:
 
-### 主技能 (context7-auto-research)
-- 需要对话上下文
-- 检测触发词和用户意图
-- 选择最佳匹配的库和版本
-- 整合文档到响应中
+### Main Skill (context7-auto-research)
+- Requires conversation context
+- Detects trigger words and user intent
+- Selects best matching library and version
+- Integrates documentation into responses
 
-### 子技能 (context7-fetcher)
-- 使用 `context: fork` 独立运行
-- 纯粹执行 API 调用
-- 不携带对话历史
-- 减少 Token 消耗
+### Sub-Skill (context7-fetcher)
+- Runs independently using `context: fork`
+- Purely executes API calls
+- Doesn't carry conversation history
+- Reduces token consumption
 
-**为什么这样设计？**
-- 主技能需要理解用户意图（需要上下文）
-- API 调用不需要对话历史（浪费 Token）
-- 分离后提高效率，降低成本
+**Why this design?**
+- Main skill needs to understand user intent (requires context)
+- API calls don't need conversation history (wastes tokens)
+- Separation improves efficiency and reduces costs
 
-## 故障排除
+## Troubleshooting
 
-### 脚本执行失败
+### Script Execution Fails
 ```bash
-# 确保脚本有执行权限
+# Ensure script has execute permissions
 chmod +x .claude/skills/context7-auto-research/context7-api.js
 
-# 确保 Node.js 已安装
-node --version  # 应该显示版本号
+# Ensure Node.js is installed
+node --version  # Should display version number
 ```
 
-### API 返回 401 错误
-检查 API key 是否正确配置：
+### API Returns 401 Error
+Check if API key is correctly configured:
 ```bash
-# 查看 .env 文件
+# View .env file
 cat .claude/skills/context7-auto-research/.env
 
-# 确保格式正确
-CONTEXT7_API_KEY=your_key_here  # ✅ 正确
-CONTEXT7_API_KEY = your_key_here  # ❌ 错误（有空格）
+# Ensure correct format
+CONTEXT7_API_KEY=your_key_here  # ✅ Correct
+CONTEXT7_API_KEY = your_key_here  # ❌ Wrong (has spaces)
 ```
 
-### API 返回 429 错误
-速率限制已达到，等待一段时间或升级 API key 配额。
+### API Returns 429 Error
+Rate limit reached. Wait for some time or upgrade your API key quota.
 
 ---
 
-🎉 配置完成！现在你可以享受自动文档研究功能了！
+🎉 Setup complete! Now you can enjoy automatic documentation research!
