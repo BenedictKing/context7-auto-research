@@ -5,7 +5,7 @@
 ## 1. 克隆仓库
 
 ```bash
-git clone https://github.com/petaflops/context7-auto-research.git
+git clone https://github.com/BenedictKing/context7-auto-research.git
 cd context7-auto-research
 ```
 
@@ -20,7 +20,7 @@ cd context7-auto-research
 在 skill 目录下创建 `.env` 文件：
 
 ```bash
-cd .claude/skills/auto-research
+cd .claude/skills/context7-auto-research
 cp .env.example .env
 ```
 
@@ -36,10 +36,10 @@ CONTEXT7_API_KEY=your_actual_api_key_here
 
 ```bash
 # 搜索 React 库
-node .claude/skills/auto-research/context7-api.js search "react" "useEffect hook"
+node .claude/skills/context7-auto-research/context7-api.js search "react" "useEffect hook"
 
 # 获取 Next.js 文档
-node .claude/skills/auto-research/context7-api.js context "/vercel/next.js" "middleware"
+node .claude/skills/context7-auto-research/context7-api.js context "/vercel/next.js" "middleware"
 ```
 
 如果看到 JSON 响应，说明配置成功！
@@ -64,7 +64,7 @@ Claude 会自动：
 A: 可以！不配置 API key 也能使用，只是有较低的速率限制。
 
 ### Q: .env 文件放在哪里？
-A: 放在 `.claude/skills/auto-research/.env`
+A: 放在 `.claude/skills/context7-auto-research/.env`
 
 ### Q: 如何知道 skill 是否在工作？
 A: 当你询问库/框架相关问题时，Claude 会自动调用脚本获取文档。你可以在响应中看到最新的、准确的信息。
@@ -117,7 +117,7 @@ Here's how to define many-to-many relations in Prisma...
 
 ## 下一步
 
-- 查看 [.claude/skills/auto-research/SKILL.md](./.claude/skills/auto-research/SKILL.md) 了解技术细节
+- 查看 [.claude/skills/context7-auto-research/SKILL.md](./.claude/skills/context7-auto-research/SKILL.md) 了解技术细节
 - 开始提问，让 Claude 自动获取最新文档！
 
 ## 故障排除
@@ -125,7 +125,7 @@ Here's how to define many-to-many relations in Prisma...
 ### 脚本执行失败
 ```bash
 # 确保脚本有执行权限
-chmod +x .claude/skills/auto-research/context7-api.js
+chmod +x .claude/skills/context7-auto-research/context7-api.js
 
 # 确保 Node.js 已安装
 node --version  # 应该显示版本号
@@ -135,7 +135,7 @@ node --version  # 应该显示版本号
 检查 API key 是否正确配置：
 ```bash
 # 查看 .env 文件
-cat .claude/skills/auto-research/.env
+cat .claude/skills/context7-auto-research/.env
 
 # 确保格式正确
 CONTEXT7_API_KEY=your_key_here  # ✅ 正确

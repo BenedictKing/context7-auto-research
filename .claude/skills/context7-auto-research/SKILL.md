@@ -1,5 +1,5 @@
 ---
-name: auto-research
+name: context7-auto-research
 description: Automatically fetches up-to-date documentation from Context7 when users ask about libraries, frameworks, APIs, or need code examples. Triggers proactively without explicit user request.
 ---
 
@@ -149,7 +149,7 @@ The script supports two ways to configure the API key:
 Create a `.env` file in the skill directory:
 
 ```bash
-# In plugins/claude/context7/skills/auto-research/.env
+# In .claude/skills/context7-auto-research/.env
 CONTEXT7_API_KEY=your_api_key_here
 ```
 
