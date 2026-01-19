@@ -11,8 +11,7 @@
     "url": "https://github.com/BenedictKing/context7-auto-research.git"
   },
   "skills": [
-    ".claude/skills/context7-auto-research",
-    ".claude/skills/context7-fetcher.md"
+    ".claude/skills/context7-auto-research"
   ],
   "keywords": [
     "context7",
