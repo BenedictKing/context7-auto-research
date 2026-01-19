@@ -54,9 +54,15 @@ Skill 会自动激活，无需手动调用。直接向 Claude 提问：
 
 Claude 会自动：
 1. 检测到 "Next.js 15" 和 "配置中间件"
-2. 调用 Context7 API 搜索 Next.js
-3. 获取最新的中间件文档
-4. 提供准确的答案和代码示例
+2. 使用 Task 工具调用 context7-fetcher 子技能搜索 Next.js
+3. 选择最佳匹配的版本（v15.x）
+4. 使用 Task 工具调用 context7-fetcher 获取中间件文档
+5. 整合文档内容，提供准确的答案和代码示例
+
+**架构优势：**
+- 主技能理解你的意图和上下文
+- 子技能独立执行 API 调用（使用 `context: fork`）
+- 减少 Token 消耗，提高响应速度
 
 ## 常见问题
 
@@ -118,7 +124,29 @@ Here's how to define many-to-many relations in Prisma...
 ## 下一步
 
 - 查看 [.claude/skills/context7-auto-research/SKILL.md](./.claude/skills/context7-auto-research/SKILL.md) 了解技术细节
+- 查看 [.claude/skills/context7-fetcher.md](./.claude/skills/context7-fetcher.md) 了解子技能架构
 - 开始提问，让 Claude 自动获取最新文档！
+
+## 架构说明
+
+本项目采用**两阶段架构**，参考了 `codex-review` 的设计模式：
+
+### 主技能 (context7-auto-research)
+- 需要对话上下文
+- 检测触发词和用户意图
+- 选择最佳匹配的库和版本
+- 整合文档到响应中
+
+### 子技能 (context7-fetcher)
+- 使用 `context: fork` 独立运行
+- 纯粹执行 API 调用
+- 不携带对话历史
+- 减少 Token 消耗
+
+**为什么这样设计？**
+- 主技能需要理解用户意图（需要上下文）
+- API 调用不需要对话历史（浪费 Token）
+- 分离后提高效率，降低成本
 
 ## 故障排除
 

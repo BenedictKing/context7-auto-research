@@ -53,15 +53,19 @@ Identify the library/framework from the user's query:
 
 ### Step 2: Search for Library
 
-Use the helper script to search for the library:
+**Use Task tool to call context7-fetcher sub-skill:**
 
-```bash
-node context7-api.js search "<library-name>" "<user-query>"
+```
+Task parameters:
+- subagent_type: Bash
+- description: "Search Context7 for library"
+- prompt: node .claude/skills/context7-auto-research/context7-api.js search "<library-name>" "<user-query>"
 ```
 
 **Example:**
-```bash
-node context7-api.js search "next.js" "How to configure middleware in Next.js 15"
+```
+Task: Search for Next.js
+Prompt: node .claude/skills/context7-auto-research/context7-api.js search "next.js" "How to configure middleware in Next.js 15"
 ```
 
 **Response format:**
@@ -79,6 +83,11 @@ node context7-api.js search "next.js" "How to configure middleware in Next.js 15
 }
 ```
 
+**Why use Task tool?**
+- Uses `context: fork` from context7-fetcher sub-skill
+- Avoids carrying conversation history to API calls
+- Reduces Token consumption
+
 ### Step 3: Select Best Match
 
 From search results, choose the library based on:
@@ -89,15 +98,19 @@ From search results, choose the library based on:
 
 ### Step 4: Fetch Documentation
 
-Use the selected library ID to get relevant documentation:
+**Use Task tool to call context7-fetcher sub-skill:**
 
-```bash
-node context7-api.js context "<library-id>" "<specific-query>"
+```
+Task parameters:
+- subagent_type: Bash
+- description: "Fetch documentation from Context7"
+- prompt: node .claude/skills/context7-auto-research/context7-api.js context "<library-id>" "<specific-query>"
 ```
 
 **Example:**
-```bash
-node context7-api.js context "/vercel/next.js" "middleware configuration"
+```
+Task: Fetch Next.js middleware docs
+Prompt: node .claude/skills/context7-auto-research/context7-api.js context "/vercel/next.js" "middleware configuration"
 ```
 
 **Response format:**
@@ -113,6 +126,11 @@ node context7-api.js context "/vercel/next.js" "middleware configuration"
   ]
 }
 ```
+
+**Why use Task tool?**
+- Independent context for API calls
+- No conversation history overhead
+- Faster execution
 
 ### Step 5: Integrate into Response
 
@@ -226,6 +244,46 @@ If not set, the API will use public rate limits (lower quota).
 4. Fetch: `node context7-api.js context "/prisma/prisma" "one-to-many relations"`
 5. Respond with Prisma schema examples
 
+## Architecture: Context Separation
+
+### Why Split into Two Skills?
+
+This skill adopts a **two-phase architecture** similar to `codex-review`:
+
+1. **Main Skill (context7-auto-research)** - Needs conversation context:
+   - Detect trigger keywords in user message
+   - Extract user query intent
+   - Select best matching library (version, name, trust score)
+   - Integrate documentation into response
+
+2. **Sub-Skill (context7-fetcher)** - Independent context (`context: fork`):
+   - Execute API calls to Context7
+   - Pure HTTP requests, no conversation history needed
+   - Reduce Token consumption
+
+### Benefits
+
+| Aspect | Main Skill | Sub-Skill |
+|--------|-----------|-----------|
+| Context | Full conversation | Fork (independent) |
+| Purpose | Intent analysis | API execution |
+| Token usage | Higher | Lower |
+| Execution | Sequential | Can be parallel |
+
+### Call Flow
+
+```
+User Query → Main Skill (detect + analyze)
+                ↓
+           Task Tool → Sub-Skill (API search)
+                ↓
+           Main Skill (select best match)
+                ↓
+           Task Tool → Sub-Skill (API fetch docs)
+                ↓
+           Main Skill (integrate + respond)
+```
+
 ## Integration with Existing Skills
 
 This skill **complements** the existing `documentation-lookup` skill:
@@ -238,9 +296,10 @@ Both can coexist - use auto-research for seamless UX, documentation-lookup for e
 ## Performance Considerations
 
 - **Cache responses**: Documentation changes infrequently
-- **Parallel requests**: If user asks about multiple libraries, fetch in parallel
+- **Parallel requests**: If user asks about multiple libraries, fetch in parallel using multiple Task calls
 - **Timeout handling**: Set reasonable timeouts (5-10s) for API calls
 - **Fallback strategy**: If API unavailable, use training data with disclaimer
+- **Context efficiency**: Sub-skill uses fork context to minimize Token consumption
 
 ## Limitations
 
@@ -248,3 +307,4 @@ Both can coexist - use auto-research for seamless UX, documentation-lookup for e
 - Subject to Context7 API rate limits
 - May not have documentation for very new or obscure libraries
 - Documentation quality depends on source repository structure
+
