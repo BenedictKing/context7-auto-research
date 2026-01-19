@@ -17,3 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 添加架构设计对比表，说明主技能与子技能的职责分离
 - 完善双语支持，README.md 和 README_CN.md 保持内容同步
 - 涉及文件：README.md (+80 lines), README_CN.md (+80 lines)
+
+### Fixed
+
+- 修正文档描述：将"直接从 GitHub 获取"改为"通过 Context7 获取（从 GitHub 等上游同步）"，确保与实际实现一致
