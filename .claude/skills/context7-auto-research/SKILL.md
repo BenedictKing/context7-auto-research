@@ -1,6 +1,6 @@
 ---
 name: context7-auto-research
-version: 1.0.0
+version: 1.0.1
 author: BenedictKing
 description: Automatically fetches up-to-date documentation from Context7 when users ask about libraries, frameworks, APIs, or need code examples. Triggers proactively without explicit user request.
 allowed-tools:
@@ -282,7 +282,7 @@ If not set, the API will use public rate limits (lower quota).
 
 ### Why Split into Two Skills?
 
-This skill adopts a **two-phase architecture** similar to `codex-review`:
+This skill adopts a **two-phase architecture**:
 
 1. **Main Skill (context7-auto-research)** - Needs conversation context:
 

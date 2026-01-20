@@ -140,7 +140,7 @@ The skill automatically activates when detecting these keywords:
 
 ### Dual-Skill Architecture
 
-This project uses a **two-stage architecture**, inspired by the `codex-review` design pattern:
+This project uses a **two-stage architecture**:
 
 ```
 User Query → Main Skill (context7-auto-research)
@@ -235,7 +235,7 @@ Here's how to define many-to-many relations in Prisma...
 
 ## Architecture Overview
 
-This project uses a **two-stage architecture**, inspired by the `codex-review` design pattern:
+This project uses a **two-stage architecture**:
 
 ### Main Skill (context7-auto-research)
 - Requires conversation context

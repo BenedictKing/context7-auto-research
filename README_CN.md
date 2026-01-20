@@ -140,7 +140,7 @@ Claude 会自动：
 
 ### 双技能架构
 
-本项目采用**两阶段架构**，参考了 `codex-review` 的设计模式：
+本项目采用**两阶段架构**：
 
 ```
 用户提问 → 主技能 (context7-auto-research)
@@ -235,7 +235,7 @@ Here's how to define many-to-many relations in Prisma...
 
 ## 架构说明
 
-本项目采用**两阶段架构**，参考了 `codex-review` 的设计模式：
+本项目采用**两阶段架构**：
 
 ### 主技能 (context7-auto-research)
 - 需要对话上下文
