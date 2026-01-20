@@ -35,7 +35,7 @@ The easiest way to install this skill is using the `add-skill` tool:
 # Install to Claude Code
 npx add-skill BenedictKing/context7-auto-research
 
-# Or install globally to all detected agents
+# Or install globally to all detected agents (Claude Code, Cursor, Codex, etc.)
 npx add-skill BenedictKing/context7-auto-research -g
 ```
 

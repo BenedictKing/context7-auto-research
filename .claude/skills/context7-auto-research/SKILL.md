@@ -8,6 +8,7 @@ allowed-tools:
   - Bash
   - Read
   - Write
+user-invocable: true
 ---
 
 # Context7 Auto Research Skill
@@ -19,21 +20,25 @@ This skill automatically fetches current documentation from Context7 API when de
 This skill should activate **proactively** when the user's message contains:
 
 ### Implementation Queries (实现相关)
+
 - "如何实现" / "怎么写" / "怎么做"
 - "How do I..." / "How to..." / "How can I..."
 - "Show me how to..." / "Write code for..."
 
 ### Configuration & Setup (配置相关)
+
 - "配置" / "设置" / "安装"
 - "configure" / "setup" / "install"
 - "初始化" / "initialize"
 
 ### Documentation Requests (文档相关)
+
 - "文档" / "参考" / "API"
 - "documentation" / "docs" / "reference"
 - "查看" / "look up"
 
 ### Library/Framework Mentions (库/框架提及)
+
 - React, Vue, Angular, Svelte, Solid
 - Next.js, Nuxt, Remix, Astro
 - Express, Fastify, Koa, Hono
@@ -43,6 +48,7 @@ This skill should activate **proactively** when the user's message contains:
 - Any npm package or GitHub repository
 
 ### Code Generation Requests (代码生成)
+
 - "生成代码" / "写一个" / "创建"
 - "generate" / "create" / "build"
 - "implement" / "add feature"
@@ -54,6 +60,7 @@ When triggered, follow this workflow:
 ### Step 1: Extract Library Information
 
 Identify the library/framework from the user's query:
+
 - Library name (e.g., "react", "next.js", "prisma")
 - Version if specified (e.g., "React 19", "Next.js 15")
 - Specific feature/API mentioned (e.g., "useEffect", "middleware", "relations")
@@ -70,12 +77,14 @@ Task parameters:
 ```
 
 **Example:**
+
 ```
 Task: Search for Next.js
 Prompt: node .claude/skills/context7-auto-research/context7-api.js search "next.js" "How to configure middleware in Next.js 15"
 ```
 
 **Response format:**
+
 ```json
 {
   "libraries": [
@@ -91,6 +100,7 @@ Prompt: node .claude/skills/context7-auto-research/context7-api.js search "next.
 ```
 
 **Why use Task tool?**
+
 - Uses `context: fork` from context7-fetcher sub-skill
 - Avoids carrying conversation history to API calls
 - Reduces Token consumption
@@ -98,6 +108,7 @@ Prompt: node .claude/skills/context7-auto-research/context7-api.js search "next.
 ### Step 3: Select Best Match
 
 From search results, choose the library based on:
+
 1. **Exact name match** to user's query
 2. **Highest trust score** (indicates quality/popularity)
 3. **Version match** if user specified (e.g., "Next.js 15" → prefer v15.x)
@@ -115,12 +126,14 @@ Task parameters:
 ```
 
 **Example:**
+
 ```
 Task: Fetch Next.js middleware docs
 Prompt: node .claude/skills/context7-auto-research/context7-api.js context "/vercel/next.js" "middleware configuration"
 ```
 
 **Response format:**
+
 ```json
 {
   "results": [
@@ -135,6 +148,7 @@ Prompt: node .claude/skills/context7-auto-research/context7-api.js context "/ver
 ```
 
 **Why use Task tool?**
+
 - Independent context for API calls
 - No conversation history overhead
 - Faster execution
@@ -142,6 +156,7 @@ Prompt: node .claude/skills/context7-auto-research/context7-api.js context "/ver
 ### Step 5: Integrate into Response
 
 Use the fetched documentation to:
+
 1. **Answer accurately** with current information
 2. **Include code examples** from the docs
 3. **Cite version** when relevant
@@ -152,16 +167,20 @@ Use the fetched documentation to:
 The `context7-api.js` script provides two commands:
 
 ### Search Library
+
 ```bash
 node context7-api.js search <libraryName> <query>
 ```
+
 - Returns matching libraries with metadata
 - Use for initial library resolution
 
 ### Get Context
+
 ```bash
 node context7-api.js context <libraryId> <query>
 ```
+
 - Returns relevant documentation snippets
 - Use after selecting a library
 
@@ -179,6 +198,7 @@ CONTEXT7_API_KEY=your_api_key_here
 ```
 
 You can copy from the example:
+
 ```bash
 cp .env.example .env
 # Then edit .env with your actual API key
@@ -199,19 +219,23 @@ If not set, the API will use public rate limits (lower quota).
 ## Best Practices
 
 ### Query Specificity
+
 - Pass the **full user question** as the query parameter for better relevance
 - Include specific feature names (e.g., "useEffect cleanup" vs just "useEffect")
 
 ### Version Awareness
+
 - When users mention versions, use version-specific library IDs
 - Example: `/vercel/next.js/v15.1.8` instead of `/vercel/next.js`
 
 ### Error Handling
+
 - If library search returns no results, inform user and suggest alternatives
 - If API fails, fall back to training data but mention it may be outdated
 - Handle rate limits gracefully (429 errors)
 
 ### Response Quality
+
 - Don't dump entire documentation - extract relevant parts
 - Combine multiple doc snippets if needed for complete answer
 - Always include practical code examples
@@ -223,6 +247,7 @@ If not set, the API will use public rate limits (lower quota).
 **User:** "How do I use useEffect to fetch data in React 19?"
 
 **Skill Actions:**
+
 1. Detect trigger: "How do I use" + "useEffect" + "React 19"
 2. Search: `node context7-api.js search "react" "useEffect fetch data"`
 3. Select: `/facebook/react/v19.0.0` (version match)
@@ -234,6 +259,7 @@ If not set, the API will use public rate limits (lower quota).
 **User:** "配置 Next.js 15 的中间件"
 
 **Skill Actions:**
+
 1. Detect trigger: "配置" + "Next.js 15" + "中间件"
 2. Search: `node context7-api.js search "next.js" "middleware configuration"`
 3. Select: `/vercel/next.js/v15.1.8`
@@ -245,6 +271,7 @@ If not set, the API will use public rate limits (lower quota).
 **User:** "Show me how to define one-to-many relations in Prisma"
 
 **Skill Actions:**
+
 1. Detect trigger: "Show me how" + "Prisma"
 2. Search: `node context7-api.js search "prisma" "one-to-many relations"`
 3. Select: `/prisma/prisma` (highest trust score)
@@ -258,6 +285,7 @@ If not set, the API will use public rate limits (lower quota).
 This skill adopts a **two-phase architecture** similar to `codex-review`:
 
 1. **Main Skill (context7-auto-research)** - Needs conversation context:
+
    - Detect trigger keywords in user message
    - Extract user query intent
    - Select best matching library (version, name, trust score)
@@ -270,12 +298,12 @@ This skill adopts a **two-phase architecture** similar to `codex-review`:
 
 ### Benefits
 
-| Aspect | Main Skill | Sub-Skill |
-|--------|-----------|-----------|
-| Context | Full conversation | Fork (independent) |
-| Purpose | Intent analysis | API execution |
-| Token usage | Higher | Lower |
-| Execution | Sequential | Can be parallel |
+| Aspect      | Main Skill        | Sub-Skill          |
+| ----------- | ----------------- | ------------------ |
+| Context     | Full conversation | Fork (independent) |
+| Purpose     | Intent analysis   | API execution      |
+| Token usage | Higher            | Lower              |
+| Execution   | Sequential        | Can be parallel    |
 
 ### Call Flow
 
@@ -314,4 +342,3 @@ Both can coexist - use auto-research for seamless UX, documentation-lookup for e
 - Subject to Context7 API rate limits
 - May not have documentation for very new or obscure libraries
 - Documentation quality depends on source repository structure
-
