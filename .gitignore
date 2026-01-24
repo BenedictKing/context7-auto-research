@@ -21,3 +21,5 @@ Thumbs.db
 
 # Test files
 test-output/
+
+.claude/settings.local.json

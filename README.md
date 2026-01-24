@@ -27,16 +27,16 @@ Set up in 5 minutes
 
 ## Installation
 
-### Option 1: Install via add-skill (Recommended)
+### Option 1: Install via skills CLI (Recommended)
 
-The easiest way to install this skill is using the `add-skill` tool:
+The easiest way to install this skill is using the `skills` CLI tool:
 
 ```bash
-# Install to Claude Code
-npx add-skill BenedictKing/context7-auto-research
+# Install globally to all detected agents (Claude Code, Cursor, Codex, etc.)
+npx skills add -g BenedictKing/context7-auto-research
 
-# Or install globally to all detected agents (Claude Code, Cursor, Codex, etc.)
-npx add-skill BenedictKing/context7-auto-research -g
+# Or install to current project only
+npx skills add BenedictKing/context7-auto-research
 ```
 
 The skill will be automatically installed to `~/.claude/skills/context7-auto-research` and loaded by Claude Code.
